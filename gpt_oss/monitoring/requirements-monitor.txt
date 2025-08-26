@@ -16,3 +16,7 @@ jinja2>=3.0.0
 # Testing
 pytest>=6.0.0
 pytest-cov>=3.0.0
+
+# Web interface (optional)
+streamlit>=1.28.0
+plotly>=5.15.0

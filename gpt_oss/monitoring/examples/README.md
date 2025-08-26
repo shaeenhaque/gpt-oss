@@ -4,7 +4,28 @@ This directory contains example data and usage instructions for the GPT-OSS Hall
 
 ## Quick Start
 
-### Basic Usage
+### 🌐 Web Interface (Recommended)
+
+The easiest way to try the hallucination monitor is through our beautiful web interface:
+
+```bash
+# Install dependencies
+pip install streamlit plotly
+pip install -e ".[monitoring]"
+
+# Launch the web interface
+python gpt_oss/monitoring/run_web_app.py
+```
+
+This opens a sexy web interface at `http://localhost:8501` with:
+- 🎨 Beautiful visualizations (gauge charts, radar plots, bar charts)
+- ⚙️ Interactive configuration sliders
+- 🎯 Quick example buttons
+- 📊 Real-time analysis results
+- 🎨 Color-coded risk highlighting
+- 📄 HTML report generation
+
+### 📝 Basic Usage (Python API)
 
 ```python
 from gpt_oss.monitoring import HallucinationMonitor, MonitorConfig
