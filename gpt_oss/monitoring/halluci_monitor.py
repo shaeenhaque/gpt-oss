@@ -203,11 +203,18 @@ class HallucinationMonitor:
         """Generate HTML report and save to file."""
         
         # Prepare results for HTML generator
+        # Add text field to spans for template
+        processed_spans = []
+        for span in spans:
+            span_copy = span.copy()
+            span_copy['text'] = completion[span['start']:span['end']]
+            processed_spans.append(span_copy)
+        
         results = {
             'risk_score': risk_score,
             'risk_level': risk_level,
             'signals': signals,
-            'spans': spans,
+            'spans': processed_spans,
             'detector_details': detector_details,
             'completion': completion
         }

@@ -9,3 +9,10 @@ from .config import MonitorConfig, MonitorThresholds
 
 __all__ = ["HallucinationMonitor", "MonitorConfig", "MonitorThresholds"]
 __version__ = "0.1.0"
+
+# Demo module
+try:
+    from . import demo
+    __all__.append("demo")
+except ImportError:
+    pass

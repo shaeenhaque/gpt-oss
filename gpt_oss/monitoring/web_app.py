@@ -166,9 +166,15 @@ def get_risk_color(risk_level: str) -> str:
 def main():
     # Header
     st.markdown("""
-    <div class="main-header">
-        <h1>🔍 GPT-OSS Hallucination Monitor</h1>
-        <p>Advanced AI Safety & Reliability Analysis</p>
+    <div style="background: #ffffff; border-bottom: 1px solid #e5e5e5; padding: 24px 0; margin: -1rem -1rem 2rem -1rem;">
+        <div style="max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 12px;">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 2L2 8L16 14L30 8L16 2Z" fill="#10a37f"/>
+                <path d="M2 8V24L16 30V14L2 8Z" fill="#0d8a6a"/>
+                <path d="M30 8V24L16 30V14L30 8Z" fill="#0d8a6a"/>
+            </svg>
+            <h1 style="margin: 0; font-size: 24px; font-weight: 600; color: #1a1a1a;">GPT-OSS Hallucination Monitor</h1>
+        </div>
     </div>
     """, unsafe_allow_html=True)
     
@@ -452,9 +458,9 @@ def main():
     # Footer
     st.markdown("---")
     st.markdown("""
-    <div style="text-align: center; color: #666; padding: 2rem;">
-        <p>🔍 GPT-OSS Hallucination Monitor | Built with ❤️ for AI Safety</p>
-        <p>Powered by Self-Consistency, NLI Faithfulness, Numeric Sanity, and more...</p>
+    <div style="text-align: center; color: #6e6e80; padding: 2rem; font-size: 13px;">
+        <p>GPT-OSS Hallucination Monitor | Built for AI Safety & Reliability</p>
+        <p>Powered by Self-Consistency, NLI Faithfulness, Numeric Sanity, and Retrieval Support</p>
     </div>
     """, unsafe_allow_html=True)
 

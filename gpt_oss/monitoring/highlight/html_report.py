@@ -24,37 +24,306 @@ class HTMLReportGenerator:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPT-OSS Hallucination Monitor Report</title>
+    <title>GPT-OSS Hallucination Analysis Report</title>
     <style>
+        :root {
+            --primary-color: #10a37f;
+            --primary-dark: #0d8a6a;
+            --secondary-color: #f7f7f8;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6e6e80;
+            --border-color: #e5e5e5;
+            --success-color: #10a37f;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --background: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            padding: 0;
+            background-color: var(--background);
+            color: var(--text-primary);
+            font-size: 14px;
         }
+        
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
+            background: var(--background);
         }
+        
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
+            background: var(--background);
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .timestamp {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        
+        .content {
+            padding: 32px;
+        }
+        
+        .summary-card {
+            background: var(--background);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .summary-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        
+        .summary-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .risk-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 13px;
+        }
+        
+        .risk-low {
+            background: rgba(16, 163, 127, 0.1);
+            color: var(--success-color);
+        }
+        
+        .risk-medium {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .risk-high {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
+        }
+        
+        .risk-score-section {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .risk-score {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .risk-score-label {
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .signals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+        
+        .signal-card {
+            background: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
             text-align: center;
         }
-        .header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            font-weight: 300;
+        
+        .signal-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
-        .header .timestamp {
-            opacity: 0.8;
-            margin-top: 10px;
+        
+        .signal-score {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .analysis-section {
+            margin-bottom: 32px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+        
+        .completion-card {
+            background: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .completion-text {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            color: var(--text-primary);
+        }
+        
+        .highlighted-text {
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .highlight-nli { background-color: rgba(239, 68, 68, 0.15); color: #dc2626; }
+        .highlight-sc { background-color: rgba(245, 158, 11, 0.15); color: #d97706; }
+        .highlight-ns { background-color: rgba(16, 163, 127, 0.15); color: #059669; }
+        .highlight-rs { background-color: rgba(99, 102, 241, 0.15); color: #7c3aed; }
+        .highlight-jb { background-color: rgba(236, 72, 153, 0.15); color: #be185d; }
+        
+        .spans-section {
+            margin-top: 16px;
+        }
+        
+        .span-item {
+            background: var(--background);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        
+        .span-text {
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        
+        .span-meta {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .config-section {
+            background: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 32px;
+        }
+        
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        
+        .config-item {
+            background: var(--background);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+        }
+        
+        .config-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        
+        .config-value {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+        
+        .footer {
+            background: var(--secondary-color);
+            border-top: 1px solid var(--border-color);
+            padding: 24px 32px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 16px 20px;
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .risk-score-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .signals-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
         }
         .content {
             padding: 30px;
@@ -204,56 +473,83 @@ class HTMLReportGenerator:
 <body>
     <div class="container">
         <div class="header">
-            <h1>🤖 GPT-OSS Hallucination Monitor</h1>
+            <div class="logo-section">
+                <svg class="logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 2L2 8L16 14L30 8L16 2Z" fill="#10a37f"/>
+                    <path d="M2 8V24L16 30V14L2 8Z" fill="#0d8a6a"/>
+                    <path d="M30 8V24L16 30V14L30 8Z" fill="#0d8a6a"/>
+                </svg>
+                <h1 class="header-title">GPT-OSS Hallucination Analysis</h1>
+            </div>
             <div class="timestamp">{{ timestamp }}</div>
         </div>
         
         <div class="content">
-            <div class="summary">
-                <h2>Risk Assessment Summary</h2>
-                <div class="risk-score risk-{{ risk_level }}">{{ risk_score }}</div>
-                <div style="text-align: center; font-size: 1.2em; color: #666;">
-                    Risk Level: <strong>{{ risk_level.upper() }}</strong>
+            <div class="summary-card">
+                <div class="summary-header">
+                    <h2 class="summary-title">Risk Assessment</h2>
+                    <div class="risk-indicator risk-{{ risk_level }}">
+                        {{ risk_level.upper() }} RISK
+                    </div>
                 </div>
                 
-                <div class="signals">
+                <div class="risk-score-section">
+                    <div>
+                        <div class="risk-score">{{ "%.1f"|format(risk_score * 100) }}%</div>
+                        <div class="risk-score-label">Hallucination Risk Score</div>
+                    </div>
+                </div>
+                
+                <div class="signals-grid">
                     {% for signal_name, signal_data in signals.items() %}
                     <div class="signal-card">
-                        <div class="signal-name">{{ signal_name.replace('_', ' ').title() }}</div>
-                        <div class="signal-score">{{ "%.3f"|format(signal_data.score) }}</div>
-                        <div style="color: #666; font-size: 0.9em;">{{ signal_data.description }}</div>
+                        <div class="signal-name">{{ signal_name.replace('_', ' ').upper() }}</div>
+                        <div class="signal-score">{{ "%.1f"|format(signal_data.score * 100) }}%</div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
             
-            <div class="completion-section">
-                <h2>Analyzed Completion</h2>
-                <div class="completion-text">{{ highlighted_completion }}</div>
+            <div class="analysis-section">
+                <h3 class="section-title">Analyzed Completion</h3>
+                <div class="completion-card">
+                    <div class="completion-text">{{ highlighted_completion }}</div>
+                    
+                    {% if spans %}
+                    <div class="spans-section">
+                        <h4 style="margin: 16px 0 8px 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">Flagged Spans</h4>
+                        {% for span in spans %}
+                        <div class="span-item">
+                            <div class="span-text">"{{ span.text }}"</div>
+                            <div class="span-meta">{{ span.signal.upper() }} • {{ span.risk.upper() }} RISK</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
             </div>
             
-            <div class="details-section">
-                <h2>Detailed Analysis</h2>
+            {% if detector_details %}
+            <div class="analysis-section">
+                <h3 class="section-title">Detailed Analysis</h3>
                 
                 {% for detector_name, detector_data in detector_details.items() %}
-                <div class="collapsible">
-                    <div class="collapsible-header" onclick="toggleSection('{{ detector_name }}')">
-                        <span>{{ detector_name.replace('_', ' ').title() }} Analysis</span>
-                        <span class="toggle-icon" id="icon-{{ detector_name }}">▼</span>
-                    </div>
-                    <div class="collapsible-content" id="content-{{ detector_name }}">
-                        <pre>{{ detector_data | tojson(indent=2) }}</pre>
-                    </div>
+                <div class="completion-card">
+                    <h4 style="margin: 0 0 12px 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">
+                        {{ detector_name.replace('_', ' ').title() }}
+                    </h4>
+                    <pre style="font-size: 12px; color: var(--text-secondary); margin: 0; white-space: pre-wrap;">{{ detector_data | tojson(indent=2) }}</pre>
                 </div>
                 {% endfor %}
             </div>
+            {% endif %}
             
             <div class="config-section">
-                <h2>Configuration</h2>
+                <h3 class="section-title">Configuration</h3>
                 <div class="config-grid">
                     {% for key, value in config.items() %}
                     <div class="config-item">
-                        <div class="config-label">{{ key.replace('_', ' ').title() }}</div>
+                        <div class="config-label">{{ key.replace('_', ' ').upper() }}</div>
                         <div class="config-value">{{ value }}</div>
                     </div>
                     {% endfor %}
@@ -263,7 +559,7 @@ class HTMLReportGenerator:
         
         <div class="footer">
             <p>Generated by GPT-OSS Hallucination Monitor v{{ version }}</p>
-            <p>For more information, visit the <a href="https://github.com/openai/gpt-oss">GPT-OSS repository</a></p>
+            <p>For more information, visit the <a href="https://github.com/openai/gpt-oss" style="color: var(--primary-color); text-decoration: none;">GPT-OSS repository</a></p>
         </div>
     </div>
     
@@ -335,7 +631,7 @@ class HTMLReportGenerator:
         
         # Prepare data for template
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        risk_score = f"{results['risk_score']:.3f}"
+        risk_score = results['risk_score']  # Keep as float for template
         risk_level = results['risk_level']
         
         # Prepare signals data
