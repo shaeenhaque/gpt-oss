@@ -166,14 +166,13 @@ def get_risk_color(risk_level: str) -> str:
 def main():
     # Header
     st.markdown("""
-    <div style="background: #ffffff; border-bottom: 1px solid #e5e5e5; padding: 24px 0; margin: -1rem -1rem 2rem -1rem;">
-        <div style="max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 12px;">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16 2L2 8L16 14L30 8L16 2Z" fill="#10a37f"/>
-                <path d="M2 8V24L16 30V14L2 8Z" fill="#0d8a6a"/>
-                <path d="M30 8V24L16 30V14L30 8Z" fill="#0d8a6a"/>
-            </svg>
-            <h1 style="margin: 0; font-size: 24px; font-weight: 600; color: #1a1a1a;">GPT-OSS Hallucination Monitor</h1>
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 32px 0; margin: -1rem -1rem 2rem -1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <div style="max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 16px;">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI0IDNMMyAxMkwyNCAyMUw0NSAxMkwyNCAzWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTMgMTJWMzZMMjQgNDJWMjFMMyAxMloiIGZpbGw9IiNmMGYwZjAiLz4KPHBhdGggZD0iTTQ1IDEyVjM2TDI0IDQyVjIxTDQ1IDEyWiIgZmlsbD0iI2YwZjBmMCIvPgo8L3N2Zz4K" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+            <div>
+                <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">GPT-OSS Hallucination Monitor</h1>
+                <p style="margin: 4px 0 0 0; font-size: 16px; color: rgba(255,255,255,0.9); font-weight: 400;">Advanced AI Safety & Reliability Analysis</p>
+            </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
