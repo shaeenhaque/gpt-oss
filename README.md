@@ -483,6 +483,44 @@ if last_message.recipient == "python":
 
 The GPT-OSS Hallucination Monitor is a comprehensive system for detecting hallucination risk in LLM outputs. It provides multiple detection signals and generates detailed reports to help identify potential issues in model completions.
 
+### 🌐 Web Interface (Recommended)
+
+The easiest way to try the hallucination monitor is through our beautiful web interface:
+
+```bash
+# Install dependencies
+pip install streamlit plotly
+pip install -e ".[monitoring]"
+
+# Launch the web interface
+python gpt_oss/monitoring/run_web_app.py
+```
+
+This opens a sexy web interface at `http://localhost:8501` with:
+- 🎨 Beautiful visualizations (gauge charts, radar plots, bar charts)
+- ⚙️ Interactive configuration sliders
+- 🎯 Quick example buttons
+- 📊 Real-time analysis results
+- 🎨 Color-coded risk highlighting
+- 📄 HTML report generation
+
+### 🎯 Comprehensive Demo
+
+Run the full demo to see all features in action:
+
+```bash
+# Run the comprehensive demo
+python -m gpt_oss.monitoring.demo.demo
+```
+
+The demo showcases:
+- Basic usage examples
+- Different detection signals (truthful, hallucinated, numeric errors)
+- Professional HTML report generation
+- Web interface information
+- CLI usage examples
+- Advanced configuration features
+
 ### Quick Start
 
 ```bash
@@ -532,8 +570,15 @@ The monitor uses five key signals to assess hallucination risk:
 - **CLI Interface**: Easy command-line usage with file inputs
 - **Lightweight**: CPU-optional with fallback heuristics
 - **Deterministic**: Seeded RNG for reproducible results
+- **Web Interface**: Sexy Streamlit app with real-time analysis
+- **Professional Design**: GPT-OSS branded with sexy blue color scheme
 
-For more information, see the [monitoring examples](gpt_oss/monitoring/examples/README.md).
+### Examples
+
+For detailed examples and usage patterns, see:
+- [Monitoring Examples](gpt_oss/monitoring/examples/README.md)
+- [Demo Script](gpt_oss/monitoring/demo/README.md)
+- [Web Interface](gpt_oss/monitoring/run_web_app.py)
 
 ## Other details
 
