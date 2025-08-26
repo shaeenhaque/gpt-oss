@@ -32,6 +32,7 @@ Both models were trained using our [harmony response format][harmony] and should
 - [Harmony format & tools](#harmony-format--tools)
 - [Clients](#clients)
 - [Tools](#tools)
+- [Hallucination Monitor](#hallucination-monitor)
 - [Other details](#other-details)
 - [Contributing](#contributing)
 
@@ -477,6 +478,62 @@ if last_message.recipient == "python":
 ### Apply Patch
 
 `apply_patch` can be used to create, update or delete files locally.
+
+## Hallucination Monitor
+
+The GPT-OSS Hallucination Monitor is a comprehensive system for detecting hallucination risk in LLM outputs. It provides multiple detection signals and generates detailed reports to help identify potential issues in model completions.
+
+### Quick Start
+
+```bash
+# Install monitoring dependencies
+pip install -e ".[monitoring]"
+
+# Basic usage
+gpt-oss-monitor --prompt prompt.txt --completion output.txt
+
+# With context documents and HTML report
+gpt-oss-monitor --prompt prompt.txt --completion output.txt --contexts ctx1.txt ctx2.txt --html
+```
+
+### Python API
+
+```python
+from gpt_oss.monitoring import HallucinationMonitor, MonitorConfig
+
+# Initialize monitor
+monitor = HallucinationMonitor()
+
+# Evaluate a completion
+results = monitor.evaluate(
+    prompt="What is the capital of France?",
+    completion="Paris is the capital of France with 2.2 million people.",
+    context_docs=["Paris is the capital and most populous city of France."]
+)
+
+print(f"Risk Level: {results['risk_level']}")
+print(f"Risk Score: {results['risk_score']:.3f}")
+```
+
+### Detection Signals
+
+The monitor uses five key signals to assess hallucination risk:
+
+- **Self-Consistency (SC)**: Generates k samples and computes semantic agreement
+- **NLI Faithfulness**: Checks sentence-level entailment against prompt and context
+- **Numeric Sanity**: Detects arithmetic and unit consistency issues
+- **Retrieval Support**: Verifies claims against provided context documents
+- **Jailbreak Heuristics**: Identifies potential safety risks
+
+### Features
+
+- **Configurable**: Customize thresholds, weights, and detection parameters
+- **HTML Reports**: Beautiful, interactive reports with highlighted spans
+- **CLI Interface**: Easy command-line usage with file inputs
+- **Lightweight**: CPU-optional with fallback heuristics
+- **Deterministic**: Seeded RNG for reproducible results
+
+For more information, see the [monitoring examples](gpt_oss/monitoring/examples/README.md).
 
 ## Other details
 
