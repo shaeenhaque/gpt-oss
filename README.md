@@ -496,13 +496,13 @@ pip install -e ".[monitoring]"
 python gpt_oss/monitoring/run_web_app.py
 ```
 
-This opens a sexy web interface at `http://localhost:8501` with:
-- 🎨 Beautiful visualizations (gauge charts, radar plots, bar charts)
-- ⚙️ Interactive configuration sliders
-- 🎯 Quick example buttons
-- 📊 Real-time analysis results
-- 🎨 Color-coded risk highlighting
-- 📄 HTML report generation
+This opens a beautiful web interface at `http://localhost:8501` with:
+-  Beautiful visualizations (gauge charts, radar plots, bar charts)
+-  Interactive configuration sliders
+-  Quick example buttons
+-  Real-time analysis results
+-  Color-coded risk highlighting
+-  HTML report generation
 
 ### 🎯 Comprehensive Demo
 
